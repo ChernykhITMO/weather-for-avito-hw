@@ -20,6 +20,7 @@ func NewHandler(service *usecase.WeatherService) *Handler {
 func (h *Handler) Routes() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", h.handleHealth)
+	mux.HandleFunc("/history", h.handleHistory)
 	mux.HandleFunc("/weather", h.handleWeather)
 	return mux
 }
@@ -48,6 +49,21 @@ func (h *Handler) getWeather(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, http.StatusOK, weather)
+}
+
+func (h *Handler) handleHistory(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	history, err := h.service.GetHistory()
+	if err != nil {
+		h.writeError(w, err)
+		return
+	}
+
+	writeJSON(w, http.StatusOK, history)
 }
 
 func (h *Handler) createWeather(w http.ResponseWriter, r *http.Request) {
