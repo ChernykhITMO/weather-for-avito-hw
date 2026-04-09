@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -47,7 +48,7 @@ func (s *WeatherService) GetByCity(city string) (domain.Weather, error) {
 		RequestedAt: s.now().UTC(),
 	}
 	if err := s.repo.SaveHistory(record); err != nil {
-		return domain.Weather{}, err
+		log.Printf("weather history save failed for city %q: %v", weather.City, err)
 	}
 
 	return weather, nil

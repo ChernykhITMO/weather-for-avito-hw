@@ -100,3 +100,45 @@ func TestWeatherService_GetByCity_DoesNotSaveHistoryOnFailure(t *testing.T) {
 		t.Fatalf("len(GetHistory()) = %d, want 0", len(history))
 	}
 }
+
+type saveHistoryFailingRepo struct {
+	weather domain.Weather
+	err     error
+}
+
+func (r saveHistoryFailingRepo) Save(weather domain.Weather) error {
+	return nil
+}
+
+func (r saveHistoryFailingRepo) GetByCity(city string) (domain.Weather, error) {
+	return r.weather, nil
+}
+
+func (r saveHistoryFailingRepo) SaveHistory(record domain.HistoryRecord) error {
+	return r.err
+}
+
+func (r saveHistoryFailingRepo) GetHistory() ([]domain.HistoryRecord, error) {
+	return nil, nil
+}
+
+func TestWeatherService_GetByCity_IgnoresSaveHistoryError(t *testing.T) {
+	expected := domain.Weather{
+		City:        "Moscow",
+		Temperature: 18.5,
+		Condition:   "Cloudy",
+	}
+	service := NewWeatherService(saveHistoryFailingRepo{
+		weather: expected,
+		err:     errors.New("history unavailable"),
+	})
+
+	got, err := service.GetByCity("Moscow")
+	if err != nil {
+		t.Fatalf("GetByCity() error = %v, want nil", err)
+	}
+
+	if got != expected {
+		t.Fatalf("GetByCity() = %+v, want %+v", got, expected)
+	}
+}
