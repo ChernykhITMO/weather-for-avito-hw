@@ -24,8 +24,8 @@ test tasks for each user story and for any shared behavior that changes.
 
 **Purpose**: Capture current behavior and confirm the exact files that will change
 
-- [ ] T001 Inspect the current weather request flow in `internal/transport/http/handler.go`, `internal/usecase/weather_service.go`, and `internal/repository/memory/weather_repository.go`
-- [ ] T002 Review existing tests and update targets in `internal/transport/http/handler_test.go` and `internal/usecase/weather_service_test.go`
+- [X] T001 Inspect the current weather request flow in `internal/transport/http/handler.go`, `internal/usecase/weather_service.go`, and `internal/repository/memory/weather_repository.go`
+- [X] T002 Review existing tests and update targets in `internal/transport/http/handler_test.go` and `internal/usecase/weather_service_test.go`
 
 ---
 
@@ -35,9 +35,9 @@ test tasks for each user story and for any shared behavior that changes.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Extend the history domain model and repository contract in `internal/domain/weather.go`
-- [ ] T004 Implement bounded in-memory history storage with newest-first ordering and 10-entry truncation in `internal/repository/memory/weather_repository.go`
-- [ ] T005 Add repository-level tests for history storage ordering and 10-entry limit in `internal/repository/memory/weather_repository_test.go`
+- [X] T003 Extend the history domain model and repository contract in `internal/domain/weather.go`
+- [X] T004 Implement bounded in-memory history storage with newest-first ordering and 10-entry truncation in `internal/repository/memory/weather_repository.go`
+- [X] T005 Add repository-level tests for history storage ordering and 10-entry limit in `internal/repository/memory/weather_repository_test.go`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -53,13 +53,13 @@ test tasks for each user story and for any shared behavior that changes.
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T006 [P] [US1] Add usecase test proving a successful weather lookup is saved to history in `internal/usecase/weather_service_test.go`
-- [ ] T007 [P] [US1] Add usecase test proving a failed weather lookup does not create a history record in `internal/usecase/weather_service_test.go`
+- [X] T006 [P] [US1] Add usecase test proving a successful weather lookup is saved to history in `internal/usecase/weather_service_test.go`
+- [X] T007 [P] [US1] Add usecase test proving a failed weather lookup does not create a history record in `internal/usecase/weather_service_test.go`
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Add history append and retrieval behavior to `internal/usecase/weather_service.go`
-- [ ] T009 [US1] Ensure successful `GET /weather` requests trigger history persistence via `internal/transport/http/handler.go` without changing existing payloads
+- [X] T008 [US1] Add history append and retrieval behavior to `internal/usecase/weather_service.go`
+- [X] T009 [US1] Ensure successful `GET /weather` requests trigger history persistence via `internal/transport/http/handler.go` without changing existing payloads
 
 **Checkpoint**: At this point, successful weather lookups should create history entries and failed lookups should not
 
@@ -73,14 +73,14 @@ test tasks for each user story and for any shared behavior that changes.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T010 [P] [US2] Add transport test for `GET /history` success and empty-list response in `internal/transport/http/handler_test.go`
-- [ ] T011 [P] [US2] Add transport test for `GET /history` newest-first ordering in `internal/transport/http/handler_test.go`
+- [X] T010 [P] [US2] Add transport test for `GET /history` success and empty-list response in `internal/transport/http/handler_test.go`
+- [X] T011 [P] [US2] Add transport test for `GET /history` newest-first ordering in `internal/transport/http/handler_test.go`
 
 ### Implementation for User Story 2
 
-- [ ] T012 [US2] Add usecase method for reading history from the repository in `internal/usecase/weather_service.go`
-- [ ] T013 [US2] Add `GET /history` routing and JSON response handling in `internal/transport/http/handler.go`
-- [ ] T014 [US2] Wire history response fields to the HTTP contract, including `requested_at`, in `internal/transport/http/handler.go`
+- [X] T012 [US2] Add usecase method for reading history from the repository in `internal/usecase/weather_service.go`
+- [X] T013 [US2] Add `GET /history` routing and JSON response handling in `internal/transport/http/handler.go`
+- [X] T014 [US2] Wire history response fields to the HTTP contract, including `requested_at`, in `internal/transport/http/handler.go`
 
 **Checkpoint**: At this point, `GET /history` should return up to 10 saved entries in reverse chronological order and `[]` when empty
 
